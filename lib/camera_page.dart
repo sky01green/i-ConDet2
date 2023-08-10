@@ -28,7 +28,9 @@ class _CameraPageState extends State<CameraPage> {
   Future<XFile?> getPicture(BuildContext context)async{
     try{
       final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Predicting...")));
       final Predictor result = await  repo.prediction(image!.path);
+
       Future.delayed(
         Duration(milliseconds: 100),(){
           Navigator.pushNamed(context, "/result",arguments: ScreenArguments(result, image));
@@ -48,7 +50,10 @@ class _CameraPageState extends State<CameraPage> {
     }
     try {
       pictureFile = await cameraController.takePicture();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Predicting...")));
       final Predictor result = await repo.prediction(pictureFile!.path);
+
+
       Future.delayed(
           Duration(milliseconds: 100),(){
         Navigator.pushNamed(context, "/result",arguments: ScreenArguments(result, pictureFile));
@@ -127,6 +132,7 @@ class _CameraPageState extends State<CameraPage> {
                           child: IconButton(
                               onPressed: ()async{
                                 await getPicture(context);
+
                               },
                               icon: SvgPicture.asset('assets/gallery.svg')
                           ),
@@ -146,7 +152,6 @@ class _CameraPageState extends State<CameraPage> {
                         ),
                       ),
                     ),
-
                     Expanded(
                       child:Container(
                         child: InkWell(

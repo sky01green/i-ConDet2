@@ -12,7 +12,15 @@ class ResultPage extends StatelessWidget {
     final ScreenArguments result = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Result "),
+        title: Text("Result",style: TextStyle(color: Colors.black),),
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios,color: Colors.black,),
+          onPressed: (){
+            Navigator.pop(context);
+          },
+        ),
+        elevation: 2,
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,

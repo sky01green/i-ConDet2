@@ -14,6 +14,7 @@ class ApplicationServices{
           'Accept':'application/json'
         }
       ));
+      print(response);
       return Predictor.fromJson(response.data);
     }catch(e){
       if(e is DioException){
