@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart';
-import 'package:ml_project/predictor_model.dart';
+import 'package:ml_project/main_page.dart';
 import 'package:ml_project/services.dart';
 
 class CameraPage extends StatefulWidget {
@@ -25,18 +25,16 @@ class _CameraPageState extends State<CameraPage> {
   FlashMode? _currentFlashMode;
   final ImagePicker _picker = ImagePicker();
   final ApplicationServices repo = new ApplicationServices();
+
   Future<XFile?> getPicture(BuildContext context)async{
     try{
       final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Predicting...")));
-      final Predictor result = await  repo.prediction(image!.path);
-
+      MainPage.file=image;
       Future.delayed(
-        Duration(milliseconds: 100),(){
-          Navigator.pushNamed(context, "/result",arguments: ScreenArguments(result, image));
+          Duration(milliseconds: 100),(){
+        Navigator.pushNamed(context, "/main");
       }
       );
-      return image;
     }catch(e){
       print(e);
     }
@@ -50,14 +48,11 @@ class _CameraPageState extends State<CameraPage> {
     }
     try {
       pictureFile = await cameraController.takePicture();
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Predicting...")));
-      final Predictor result = await repo.prediction(pictureFile!.path);
-
-
+      MainPage.file = pictureFile;
       Future.delayed(
           Duration(milliseconds: 100),(){
-        Navigator.pushNamed(context, "/result",arguments: ScreenArguments(result, pictureFile));
-      }
+            Navigator.pushNamed(context, "/main");
+          }
       );
 
     } on CameraException catch (e) {
