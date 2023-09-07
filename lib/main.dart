@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ml_project/splash_screen.dart';
 import 'camera_page.dart';
 import 'main_page.dart';
 import 'result_page.dart';
@@ -27,9 +28,10 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      initialRoute: MainPage.routename ,
+      initialRoute: SplashScreen.routename ,
       debugShowCheckedModeBanner: false,
       routes: {
+        SplashScreen.routename:(context)=>SplashScreen(),
         MainPage.routename:(context)=>MainPage(),
         CameraPage.routename:(context)=>CameraPage(),
         ResultPage.routename:(context)=>ResultPage()
